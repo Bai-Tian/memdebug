@@ -1,13 +1,13 @@
-/* Ò»¸ö¼òÒ×cÓïÑÔÄÚ´æµ÷ÊÔÆ÷
+/* ä¸€ä¸ªç®€æ˜“cè¯­è¨€å†…å­˜è°ƒè¯•å™¨
 A simple C language memory debuger
 by Bai_Tian at *** on May 26 2021 */
 #ifndef _MEM_DEBUG_H 
 #define _MEM_DEBUG_H
-/* Ïà¹ØÅäÖÃ */
+/* ç›¸å…³é…ç½® */
 
-//ÈÕÖ¾Êä³öµÄÎÄ¼ş
+//æ—¥å¿—è¾“å‡ºçš„æ–‡ä»¶
 #define _MEM_LOG_PATH "memlog.html"
-//µ÷ÊÔ¿ª¹Ø
+//è°ƒè¯•å¼€å…³
 #define _MEM_DEBUG
 
 //////////////////////////////
@@ -19,7 +19,7 @@ by Bai_Tian at *** on May 26 2021 */
 typedef unsigned long long u64;
 typedef unsigned char byte;
 
-//»ñÈ¡Ê±¼ä
+//è·å–æ—¶é—´
 char _MEM_TIME_buffer[20];
 char* _MEM_TIME_FUNC(){
     time_t ct;
@@ -32,29 +32,29 @@ char* _MEM_TIME_FUNC(){
 
 #define __CURRENT_TIME__ _MEM_TIME_FUNC()
 
-/*Ö¸ÕëÆ«ÒÆ¼ÆËã
-@param ptr Ö¸Õë
-@param ofs Æ«ÒÆ */
+/*æŒ‡é’ˆåç§»è®¡ç®—
+@param ptr æŒ‡é’ˆ
+@param ofs åç§» */
 #define ptrofs(ptr,ofs) (((u64)ptr)+(ofs))
 
-/*Ö¸Õë×ª»»Îª×Ö½ÚÊı×é
-@param ptr Ö¸Õë */
+/*æŒ‡é’ˆè½¬æ¢ä¸ºå­—èŠ‚æ•°ç»„
+@param ptr æŒ‡é’ˆ */
 #define byte_array(ptr) ((byte*)ptr)
 
-/*×Ö½Ú±éÀúÆ÷,
-Ê¹ÓÃ*b·ÃÎÊÄÚ´æ
-@param ptr ÄÚ´æµØÖ·
-@param size ÄÚ´æ´óĞ¡ */
+/*å­—èŠ‚éå†å™¨,
+ä½¿ç”¨*bè®¿é—®å†…å­˜
+@param ptr å†…å­˜åœ°å€
+@param size å†…å­˜å¤§å° */
 #define byte_iterator(ptr,size) for(byte* b=(byte*)ptr;(u64)b<(u64)ptr+size;++b)
 
-/*void*Ö¸ÕëÀàĞÍ×ª»»
-@param ptr Ö¸Õë
-@param type ÀàĞÍ */
+/*void*æŒ‡é’ˆç±»å‹è½¬æ¢
+@param ptr æŒ‡é’ˆ
+@param type ç±»å‹ */
 #define voidcast(ptr,type) ((type*)ptr)
 
-/* ÄÚ´æµ÷ÊÔ */
+/* å†…å­˜è°ƒè¯• */
 #ifdef _MEM_DEBUG
-    /* ³õÊ¼»¯ */
+    /* åˆå§‹åŒ– */
     FILE *_MEM_LOG_FILE;
     #define memdebug_init() do{ \
         _MEM_LOG_FILE=fopen(_MEM_LOG_PATH,"w"); \
@@ -66,27 +66,27 @@ char* _MEM_TIME_FUNC(){
 
     /* HTML */
     
-    //ÈÕÖ¾Êä³ö
-    #define _MEM_LOG(content) fprintf(_MEM_LOG_FILE,"<summary>¡ğ [%s] %s at line:%d</summary>",__CURRENT_TIME__,content,__LINE__);
-    //±í¿ªÊ¼
-    #define _MEM_LOG_TABLE_BEGIN(content) fprintf(_MEM_LOG_FILE,"<details><summary>[%s] %s</summary><table border=\"0\">",__CURRENT_TIME__,content);
-    //±íĞĞ¿ªÊ¼
+    //æ—¥å¿—è¾“å‡º
+    #define _MEM_LOG(content) fprintf(_MEM_LOG_FILE,"<summary>â—‹ [%s] %s (line:%d)</summary>",__CURRENT_TIME__,content,__LINE__);
+    //è¡¨å¼€å§‹
+    #define _MEM_LOG_TABLE_BEGIN(content) fprintf(_MEM_LOG_FILE,"<details><summary>[%s] %s (line:%d)</summary><table border=\"0\">",__CURRENT_TIME__,content,__LINE__);
+    //è¡¨è¡Œå¼€å§‹
     #define _MEM_LOG_TABLE_ROW_BEGIN() fprintf(_MEM_LOG_FILE,"<tr>"); 
-    //±íÍ·
+    //è¡¨å¤´
     #define _MEM_LOG_TABLE_HEAD(HEX) fprintf(_MEM_LOG_FILE,"<th>%X</th>",HEX); 
-    //±íÔªËØ
+    //è¡¨å…ƒç´ 
     #define _MEM_LOG_TABLE_ELE(HEX) if(HEX<10) fprintf(_MEM_LOG_FILE,"<td>0%X</td>",HEX); else fprintf(_MEM_LOG_FILE,"<td>%X</td>",HEX); 
-    //Ç¿µ÷±íÔªËØ
+    //å¼ºè°ƒè¡¨å…ƒç´ 
     #define _MEM_LOG_TABLE_ELE_S(HEX) if(HEX<10) fprintf(_MEM_LOG_FILE,"<td bgcolor=\"#cccccc\">0%X</td>",HEX); else fprintf(_MEM_LOG_FILE,"<td bgcolor=\"#cccccc\">%X</td>",HEX); 
-    //±íĞĞ½áÊø
+    //è¡¨è¡Œç»“æŸ
     #define _MEM_LOG_TABLE_ROW_END() fprintf(_MEM_LOG_FILE,"</tr>");
-    //±í½áÊø
+    //è¡¨ç»“æŸ
     #define _MEM_LOG_TABLE_END() fprintf(_MEM_LOG_FILE,"</table></details>");
 
-    /*½á¹¹Ìå¸³Öµ
-    @param stc ½á¹¹Ìå
-    @param mbr ³ÉÔ±
-    @param x Öµ */
+    /*ç»“æ„ä½“èµ‹å€¼
+    @param stc ç»“æ„ä½“
+    @param mbr æˆå‘˜
+    @param x å€¼ */
     #define set_struct(stc,mbr,x) (stc.mbr)=(x); \
         _MEM_LOG_TABLE_BEGIN( #stc "." #mbr "=" #x) \
         _MEM_LOG_TABLE_ROW_BEGIN() \
@@ -102,11 +102,11 @@ char* _MEM_TIME_FUNC(){
         } \
         _MEM_LOG_TABLE_END()
 
-    /*½á¹¹ÌåÖ¸Õë¸³Öµ
-    @param stctype ½á¹¹ÌåÀàĞÍ
-    @param ptr ÄÚ´æÖ¸Õë
-    @param mbr ³ÉÔ±
-    @param x Öµ */
+    /*ç»“æ„ä½“æŒ‡é’ˆèµ‹å€¼
+    @param stctype ç»“æ„ä½“ç±»å‹
+    @param ptr å†…å­˜æŒ‡é’ˆ
+    @param mbr æˆå‘˜
+    @param x å€¼ */
     #define set_structptr(stctype,ptr,mbr,x) (((stctype*)ptr)->mbr)=(x); \
         _MEM_LOG_TABLE_BEGIN( #ptr "->" #mbr "=" #x) \
         _MEM_LOG_TABLE_ROW_BEGIN() \
@@ -122,12 +122,12 @@ char* _MEM_TIME_FUNC(){
         } \
         _MEM_LOG_TABLE_END()
 
-    /*·ÖÅä¶ÑÄÚ´æ
-    @param size ·ÖÅä´óĞ¡*/
+    /*åˆ†é…å †å†…å­˜
+    @param size åˆ†é…å¤§å°*/
     #define malloc(size) malloc(size); _MEM_LOG("malloc(" #size ")")
 
-    /*ÊÍ·Å¶ÑÄÚ´æ
-    @param ptr ÄÚ´æÖ¸Õë*/
+    /*é‡Šæ”¾å †å†…å­˜
+    @param ptr å†…å­˜æŒ‡é’ˆ*/
     #define free(ptr) free(ptr); _MEM_LOG("free(" #ptr ")")
 #else
     #define memdebug_init()
