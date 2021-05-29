@@ -138,7 +138,7 @@ FILE *_MEM_LOG_FILE;
 	} \
 	_MEM_LOG_TABLE_END()
 
-/*结构体输出信息
+/*结构体成员输出信息
 @param stc 结构体 
 @param mbr 成员 */
 #define log_struct(stc,mbr) set_struct(stc,mbr,stc.mbr)
@@ -172,5 +172,6 @@ FILE *_MEM_LOG_FILE;
 #define free(ptr) free(ptr)
 #define memdebug_log(content)
 #define log_structptr(stctype,ptr,mbr,x)
+#define log_struct(stc,mbr)
 #endif
 #endif
