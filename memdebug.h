@@ -138,6 +138,11 @@ FILE *_MEM_LOG_FILE;
 	} \
 	_MEM_LOG_TABLE_END()
 
+/*结构体输出信息
+@param stc 结构体 
+@param mbr 成员 */
+#define log_struct(stc,mbr) set_struct(stc,mbr,stc.mbr)
+
 /*结构体指针输出信息
 @param stctype 结构体类型
 @param ptr 内存指针
